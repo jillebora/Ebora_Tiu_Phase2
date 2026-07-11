@@ -133,7 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="mainSpring.cpp" />
+    <ClCompile Include="P6\cable.cpp" />
     <ClCompile Include="P6\chain.cpp" />
     <ClCompile Include="P6\contactResolver.cpp" />
     <ClCompile Include="dragForceGenerator.cpp" />
@@ -142,7 +142,7 @@
     <ClCompile Include="glad.c" />
     <ClCompile Include="gravityForceGenerator.cpp" />
     <ClCompile Include="model.cpp" />
-    <ClCompile Include="P6\anchoredSpring.cpp" />
+    <ClCompile Include="mainPhase2.cpp" />
     <ClCompile Include="P6\particle.cpp" />
     <ClCompile Include="P6\particleSpring.cpp" />
     <ClCompile Include="P6\particleContact.cpp" />
@@ -152,6 +152,7 @@
     <ClCompile Include="shader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="P6\cable.h" />
     <ClInclude Include="P6\chain.h" />
     <ClInclude Include="P6\contactResolver.h" />
     <ClInclude Include="dragForceGenerator.h" />
@@ -159,7 +160,6 @@
     <ClInclude Include="forceRegistry.h" />
     <ClInclude Include="gravityForceGenerator.h" />
     <ClInclude Include="model.h" />
-    <ClInclude Include="P6\anchoredSpring.h" />
     <ClInclude Include="P6\particle.h" />
     <ClInclude Include="P6\particleSpring.h" />
     <ClInclude Include="P6\particleContact.h" />
