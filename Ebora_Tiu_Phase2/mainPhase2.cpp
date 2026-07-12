@@ -67,7 +67,7 @@ P6::Particle* drawCradle(P6::PhysicsWorld& pWorld, Model& sphere, GravityForceGe
 		p->mass = MASS;
 		p->radius = particleRad;
 		p->restitution = RESTITUTION;
-		p->damping = 1.f;
+		p->damping = 0.999f;
 
 		pWorld.AddParticle(p);
 		//pWorld.forceRegistry.Add(p, &gravityGen);
