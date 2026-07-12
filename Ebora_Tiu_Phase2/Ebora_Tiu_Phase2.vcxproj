@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="inputHandler.cpp" />
     <ClCompile Include="P6\cable.cpp" />
     <ClCompile Include="P6\chain.cpp" />
     <ClCompile Include="P6\contactResolver.cpp" />
@@ -152,6 +153,7 @@
     <ClCompile Include="shader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inputHandler.h" />
     <ClInclude Include="P6\cable.h" />
     <ClInclude Include="P6\chain.h" />
     <ClInclude Include="P6\contactResolver.h" />

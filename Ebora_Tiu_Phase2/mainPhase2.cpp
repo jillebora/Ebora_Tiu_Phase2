@@ -22,7 +22,7 @@
 #include "model.h"
 #include "P6/cable.h"
 #include "gravityForceGenerator.h"
-
+#include "inputHandler.h"
 
 using namespace std;
 using namespace std::chrono_literals;
@@ -46,6 +46,29 @@ glm::vec3 applyForce(500000.f, 0.f, 0.f);
 
 const float MASS = 50.f;
 const float RESTITUTION = 0.9f;
+
+/*
+	Creates an orbit camera
+	yaw, pitch, and radius values
+
+*/
+static glm::mat4 BuildView(float yaw, float pitch, float radius)
+{
+	float pitchRad = glm::radians(pitch);
+	float yawRad = glm::radians(yaw);
+
+	float x = radius * cosf(pitchRad) * sinf(yawRad);
+	float y = radius * sinf(pitchRad);
+	float z = radius * cosf(pitchRad) * cosf(yawRad);
+
+	glm::vec3 eye(x, y, z);
+	glm::vec3 target(0.f);
+
+	glm::vec3 up = (fabsf(pitch) > 89.f) ? glm::vec3(0.f, 0.f, (pitch > 0.f) ? -1.f : 1.f) : glm::vec3(0.f, 1.f, 0.f);
+
+	return glm::lookAt(eye, target, up);
+
+}
 
 /*
 	Draws Newton's Cradle.
@@ -74,7 +97,7 @@ P6::Particle* drawCradle(P6::PhysicsWorld& pWorld, Model& sphere, GravityForceGe
 		p->setName("Point" + std::to_string(i));
 
 
-		p->Position = anchor - glm::vec3(0.f, cableLen, 0.f);
+		p->Position = anchor;
 
 
 		p->mass = MASS;	// 50, per the spec
@@ -159,6 +182,10 @@ int main()
 	gladLoadGL();
 	glEnable(GL_DEPTH_TEST);
 
+	// Update camera controls and projection mode.
+	InputHandler input;
+	input.Register(window);
+
 	// SHADERS
 	Shader shader("Shaders/sphere.vert", "Shaders/sphere.frag");
 
@@ -169,12 +196,23 @@ int main()
 
 	// CAMERA
 
-	glm::mat4 proj = glm::ortho(-350.f, 350.f, -350.f, 350.f, -500.f, 1000.f);
+	glm::mat4 orthoProj = glm::ortho(-350.f, 350.f, -350.f, 350.f, -500.f, 1000.f);
+	glm::mat4 perspProj = glm::perspective(glm::radians(45.f), windowWidth / windowHeight, 1.f, 2000.f);
+
+	glm::mat4 proj = orthoProj;
 
 	glm::mat4 view = glm::lookAt(
 		glm::vec3(0.f, 0.f, 700.f),
 		glm::vec3(0.f, 0.f, 0.f),
 		glm::vec3(0.f, 1.f, 0.f));
+
+	// Orbit camera state.
+	// Yaw   = horizontal rotation.
+	// Pitch = vertical rotation.
+	// Radius = distance from the firework.
+	float camYaw = 0.f;
+	float camPitch = 0.f;
+	float camRadius = 700.f;
 
 	// Wire shader + camera into the model's RenderObject
 	sphere.setShader(&shader.ID);
@@ -201,18 +239,15 @@ int main()
 	using clock = std::chrono::high_resolution_clock;
 
 	constexpr std::chrono::nanoseconds timestep(16ms);
+	constexpr float timestep_sec = timestep.count() / (float)1E09;
 
 	auto curr_time = clock::now();
 	auto prev_time = curr_time;
 
 	std::chrono::nanoseconds curr_ns(0);
 
-	int currentRank = 1;
-	bool printedResults = false;
-
 	// input edge-detection state 
 	bool spacePrev = false;   // so one press = one force
-	int  camView = 1;       // 1 = front, 2 = side
 
 	// LOOP
 
@@ -242,15 +277,38 @@ int main()
 
 		if (curr_ns >= timestep)
 		{
-			constexpr float timestep_sec = timestep.count() / (float)1E09;
-
 			curr_ns -= timestep;
 
+			// Update camera controls
+			input.ProcessInput(
+				timestep_sec,
+				camYaw,
+				camPitch
+			);
+
+			// Update projection mode
+			if (input.IsOrtho())
+			{
+				proj = orthoProj;
+			}
+			else
+			{
+				proj = perspProj;
+			}
+
+			// Update camera view matrix
+			view = BuildView(
+				camYaw,
+				camPitch,
+				camRadius
+			);
+
+			// Update physics
 			pWorld.Update(timestep_sec);
 
 			//contact.Resolve(timestep_sec);
-
 		}
+
 		// ---- render ----
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

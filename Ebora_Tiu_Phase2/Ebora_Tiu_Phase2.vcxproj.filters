@@ -69,6 +69,9 @@
     <ClCompile Include="mainPhase2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="inputHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tiny_obj_loader.h">
@@ -120,6 +123,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="P6\cable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inputHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
