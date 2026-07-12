@@ -60,9 +60,6 @@
     <ClCompile Include="P6\contactResolver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="P6\chain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="P6\cable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -119,9 +116,6 @@
     <ClInclude Include="P6\contactResolver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="P6\chain.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="P6\cable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -130,11 +124,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\sphere.frag">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="Shaders\sphere.vert">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
+    <CopyFileToFolders Include="Shaders\sphere.frag" />
+    <CopyFileToFolders Include="Shaders\sphere.vert" />
   </ItemGroup>
 </Project>

@@ -135,7 +135,6 @@
   <ItemGroup>
     <ClCompile Include="inputHandler.cpp" />
     <ClCompile Include="P6\cable.cpp" />
-    <ClCompile Include="P6\chain.cpp" />
     <ClCompile Include="P6\contactResolver.cpp" />
     <ClCompile Include="dragForceGenerator.cpp" />
     <ClCompile Include="forceGenerator.cpp" />
@@ -155,7 +154,6 @@
   <ItemGroup>
     <ClInclude Include="inputHandler.h" />
     <ClInclude Include="P6\cable.h" />
-    <ClInclude Include="P6\chain.h" />
     <ClInclude Include="P6\contactResolver.h" />
     <ClInclude Include="dragForceGenerator.h" />
     <ClInclude Include="forceGenerator.h" />
