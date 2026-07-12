@@ -47,6 +47,14 @@ glm::vec3 applyForce(500000.f, 0.f, 0.f);
 const float MASS = 50.f;
 const float RESTITUTION = 0.9f;
 
+/*
+	Draws Newton's Cradle.
+
+	Spawns each particle hung at an anchor point Cable and renders the particle Spheres
+
+	Returns a pointer to the leftmost particle so main() can apply launch force when user
+	presses Space
+*/
 P6::Particle* drawCradle(P6::PhysicsWorld& pWorld, Model& sphere, GravityForceGenerator& gravityGen)
 {
 	
@@ -57,18 +65,24 @@ P6::Particle* drawCradle(P6::PhysicsWorld& pWorld, Model& sphere, GravityForceGe
 	{
 		float x = startX + particleGap * i;
 
+		// Fixed point in space this particle's cable hangs from.
 		glm::vec3 anchor = glm::vec3(x, anchorY, 0.f);
 		anchorPoints.push_back(anchor);
 
 		// Particle
 		P6::Particle* p = new P6::Particle();
 		p->setName("Point" + std::to_string(i));
+
+
 		p->Position = anchor - glm::vec3(0.f, cableLen, 0.f);
-		p->mass = MASS;
-		p->radius = particleRad;
-		p->restitution = RESTITUTION;
+
+
+		p->mass = MASS;	// 50, per the spec
+		p->radius = particleRad;	// user-input radius
+		p->restitution = RESTITUTION;	// 0.9, per the spec
 		p->damping = 1.f;
 
+		// Register the particle with the world, then attach gravity.
 		pWorld.AddParticle(p);
 		pWorld.forceRegistry.Add(p, &gravityGen);
 		cradleParticles.push_back(p);
@@ -91,6 +105,7 @@ P6::Particle* drawCradle(P6::PhysicsWorld& pWorld, Model& sphere, GravityForceGe
 
 	}
 
+	// Leftmost particle — the one the Space key launches.
 	return cradleParticles[0];
 }
 
