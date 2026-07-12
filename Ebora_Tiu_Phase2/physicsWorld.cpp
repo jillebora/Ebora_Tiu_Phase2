@@ -4,7 +4,7 @@ void P6::PhysicsWorld::AddParticle(Particle* toAdd)
 {
 	Particles.push_back(toAdd);
 
-	forceRegistry.Add(toAdd, &Gravity);
+	//forceRegistry.Add(toAdd, &Gravity);
 }
 
 void P6::PhysicsWorld::Update(float time)

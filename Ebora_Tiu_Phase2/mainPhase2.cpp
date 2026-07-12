@@ -67,10 +67,10 @@ P6::Particle* drawCradle(P6::PhysicsWorld& pWorld, Model& sphere, GravityForceGe
 		p->mass = MASS;
 		p->radius = particleRad;
 		p->restitution = RESTITUTION;
-		p->damping = 0.999f;
+		p->damping = 1.f;
 
 		pWorld.AddParticle(p);
-		//pWorld.forceRegistry.Add(p, &gravityGen);
+		pWorld.forceRegistry.Add(p, &gravityGen);
 		cradleParticles.push_back(p);
 
 		// Render Sphere
@@ -166,7 +166,7 @@ int main()
 	sphere.setCamera(&proj, &view);
 
 	
-	GravityForceGenerator gravity(glm::vec3(0.f, gravityStrength, 0.f));
+	GravityForceGenerator gravity(glm::vec3(0.f, 10.f * gravityStrength, 0.f));
 
 	P6::Particle* leftmost = drawCradle(pWorld, sphere, gravity);
 
