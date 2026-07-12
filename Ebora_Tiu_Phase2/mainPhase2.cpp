@@ -41,7 +41,8 @@ float particleGap = 100.f;
 float particleRad = 30.f;
 float gravityStrength = -50.f;
 
-float applyForce = 500000.f;
+// Force entered by the user
+glm::vec3 applyForce(500000.f, 0.f, 0.f);
 
 const float MASS = 50.f;
 const float RESTITUTION = 0.9f;
@@ -95,6 +96,30 @@ P6::Particle* drawCradle(P6::PhysicsWorld& pWorld, Model& sphere, GravityForceGe
 
 int main()
 {
+	cout << "Enter Cable Length: ";
+	cin >> cableLen;
+
+	cout << "Enter Particle Gap: ";
+	cin >> particleGap;
+
+	cout << "Enter Particle Radius: ";
+	cin >> particleRad;
+
+	cout << "Enter Gravity Strength: ";
+	cin >> gravityStrength;
+
+	cout << "\nEnter Force to Apply\n";
+
+	cout << "Force X: ";
+	cin >> applyForce.x;
+
+	cout << "Force Y: ";
+	cin >> applyForce.y;
+
+	cout << "Force Z: ";
+	cin >> applyForce.z;
+
+	cout << "\nStarting simulation...\n";
 
 	// Initialize GLFW
 	if (!glfwInit())
@@ -179,6 +204,16 @@ int main()
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();
+
+		// Apply the user-entered force once when SPACE is pressed
+		bool spaceNow = glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS;
+
+		if (spaceNow && !spacePrev)
+		{
+			leftmost->AddForce(applyForce);
+		}
+
+		spacePrev = spaceNow;
 
 		curr_time = clock::now();
 
