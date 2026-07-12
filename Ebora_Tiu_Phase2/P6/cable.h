@@ -15,7 +15,7 @@ class Cable : public ParticleLink
 		float maxLength = 1.f;
 
 		// bounciness
-		float restitution = 0.9f;
+		float restitution = 0.f;
 
 		ParticleContact* GetContact() override;
 

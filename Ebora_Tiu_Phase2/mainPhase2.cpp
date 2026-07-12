@@ -70,7 +70,7 @@ P6::Particle* drawCradle(P6::PhysicsWorld& pWorld, Model& sphere, GravityForceGe
 		p->damping = 1.f;
 
 		pWorld.AddParticle(p);
-		pWorld.forceRegistry.Add(p, &gravityGen);
+		//pWorld.forceRegistry.Add(p, &gravityGen);
 		cradleParticles.push_back(p);
 
 		// Render Sphere
@@ -84,7 +84,7 @@ P6::Particle* drawCradle(P6::PhysicsWorld& pWorld, Model& sphere, GravityForceGe
 		c->particles[0] = p;
 		c->anchorPoint = anchor;
 		c->maxLength = cableLen;
-		c->restitution = RESTITUTION;
+		c->restitution = 0.f;
 
 		pWorld.Links.push_back(c);
 		cradleCables.push_back(c);
